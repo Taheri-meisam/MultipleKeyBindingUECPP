@@ -33,12 +33,14 @@ void AMainPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// Passing Values to the TwoPressed and ThreePressed functions 
 	DECLARE_DELEGATE_OneParam(FAnotherCustomInputDelegate, const int32);
     	InputComponent->BindAction<FAnotherCustomInputDelegate>("Two", IE_Pressed, this, &AMainPlayer::TwoPressed,1);
 
 	DECLARE_DELEGATE_OneParam(FCustomInputDelegate, int32);
 	InputComponent->BindAction<FCustomInputDelegate>("Three", IE_Pressed, this, &AMainPlayer::ThreePressed, 2);
 
+	//On release both values are 0 
 	DECLARE_DELEGATE_OneParam(FCustomInputDelegate, int32);
 	InputComponent->BindAction<FCustomInputDelegate>("Three", IE_Released, this, &AMainPlayer::ThreePressed, 0);
 
@@ -48,20 +50,23 @@ void AMainPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 }
 
-
+// if both pressed do cerrain actions
 void AMainPlayer::BothKeyPressed() {
 
 	if(k1==1 && k2 == 2){
 		UE_LOG(LogTemp,Warning,TEXT("Both key pressed "));		
 	}
+	// here if two ket pressed together you can do any actions you want 
 
 }
+// if Key two pressed do cerrain actions
 void AMainPlayer::TwoPressed(int val){
+	
 	k1 = val;
 	UE_LOG(LogTemp, Warning, TEXT("Value = %d"), k1);
 	BothKeyPressed();
 }
-
+//if Key 3 pressed do certain actions 
 void AMainPlayer::ThreePressed(int val){
 	k2= val;
 	UE_LOG(LogTemp, Warning, TEXT("Value = %d"), k2);
