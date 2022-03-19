@@ -11,17 +11,13 @@ AMainPlayer::AMainPlayer()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	Lv1 = "Level1";
-	Lv1 = "Level2";
-	SwithLvl = true;
-	LevelNow = "Level1";
+
 }
 
 // Called when the game starts or when spawned
 void AMainPlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp,Warning,TEXT("changed level"));
 	
 }
 
@@ -36,13 +32,9 @@ void AMainPlayer::Tick(float DeltaTime)
 void AMainPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	FInputActionBinding& L1 = PlayerInputComponent->BindAction("Level",EInputEvent::IE_Pressed,this,&AMainPlayer::LevelChange);
-	L1.bConsumeInput = true;
-	FInputActionBinding& One1=PlayerInputComponent->BindAction("One",EInputEvent::IE_Pressed,this,&AMainPlayer::LevelChange);
-	One1.bConsumeInput = true;
 
 	DECLARE_DELEGATE_OneParam(FAnotherCustomInputDelegate, const int32);
-    InputComponent->BindAction<FAnotherCustomInputDelegate>("Two", IE_Pressed, this, &AMainPlayer::TwoPressed,1);
+    	InputComponent->BindAction<FAnotherCustomInputDelegate>("Two", IE_Pressed, this, &AMainPlayer::TwoPressed,1);
 
 	DECLARE_DELEGATE_OneParam(FCustomInputDelegate, int32);
 	InputComponent->BindAction<FCustomInputDelegate>("Three", IE_Pressed, this, &AMainPlayer::ThreePressed, 2);
@@ -51,32 +43,12 @@ void AMainPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	InputComponent->BindAction<FCustomInputDelegate>("Three", IE_Released, this, &AMainPlayer::ThreePressed, 0);
 
 	DECLARE_DELEGATE_OneParam(FAnotherCustomInputDelegate, const int32);
-    InputComponent->BindAction<FAnotherCustomInputDelegate>("Two", IE_Released, this, &AMainPlayer::TwoPressed,0);
+    	InputComponent->BindAction<FAnotherCustomInputDelegate>("Two", IE_Released, this, &AMainPlayer::TwoPressed,0);
 	
 
 }
 
-void AMainPlayer::LevelChange(){
 
-UWorld* World = GetWorld();
-if(World){
-	//FString CurrentLevel = World->GetMapName();
-}
-	if (LevelNow == "Level1"){
-		UGameplayStatics::OpenLevel(World,"Level2");
-		UE_LOG(LogTemp,Warning,TEXT(" level 1" ));
-		LevelNow = "Level2";
-		SwithLvl = false;
-	}else if (LevelNow == "Level2"){
-		UGameplayStatics::OpenLevel(World,"Level1");
-		UE_LOG(LogTemp,Warning,TEXT("Level 2"));
-		LevelNow = "Level1";
-		SwithLvl = true;
-	}
-		UE_LOG(LogTemp,Warning,TEXT("changed level"));
-
-
-}
 void AMainPlayer::BothKeyPressed() {
 
 	if(k1==1 && k2 == 2){
