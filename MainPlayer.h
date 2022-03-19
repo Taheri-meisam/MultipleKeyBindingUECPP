@@ -27,11 +27,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void LevelChange();
-	FString Lv1,Lv2;
-	bool SwithLvl;
-	FName LevelNow;
-
 	void BothKeyPressed();
 	void TwoPressed(int val);
 	void ThreePressed(int val);
